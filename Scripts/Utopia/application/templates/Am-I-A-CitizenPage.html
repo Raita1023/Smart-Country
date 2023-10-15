@@ -1,0 +1,28 @@
+{% extends "BasePage.html" %}
+{% load static %}
+{% block title %}Am I A Citizen{% endblock %}
+{% block more-style %}
+<link rel="stylesheet" href="{% static '/CSS/Am-I-A-CitizenPage/Am-I-A-CitizenPage.css' %}">
+{% endblock %}
+{% block content %}
+<div class="news">
+    <p>Tranding : </p>
+    <marquee behavior="" direction="" onmouseover="stop()" onmouseout="start()">
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for news in NEWS %}
+            <a href="" name="news" value={{news.NewsTitle}}>{{news.NewsTitle}}</a> &nbsp; || &nbsp;
+            {% endfor %}
+        </form>
+    </marquee>
+</div>
+<div class="firstdiv">
+    <div class="frem">
+        <p class="words">Share your thoughts with the country</p>
+        <div class="text-area" contenteditable data-placeholder="Write here"></div>
+        <div class="bottom-cont">
+            <a href=""> <i class="fa-regular fa-paper-plane fa-2xl"></i></a>
+        </div>
+    </div>
+</div>
+{% endblock %}
