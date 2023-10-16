@@ -7,7 +7,7 @@
 {% block content %}
 <div class="news">
     <p>Tranding : </p>
-    <marquee behavior="" direction="" onmouseover="stop()" onmouseout="start()"  scrollamount="15">
+    <marquee behavior="" direction="" onmouseover="stop()" onmouseout="start()" scrollamount="15">
         <form action="" method="post">
             {% csrf_token %}
             {% for news in NEWS %}
@@ -19,12 +19,25 @@
     </marquee>
 </div>
 <div class="firstdiv">
-    <div class="frem">
-        <p class="words">Share your thoughts with the country</p>
-        <div class="text-area" contenteditable data-placeholder="Write here"></div>
-        <div class="bottom-cont">
-            <a href=""> <i class="fa-regular fa-paper-plane fa-2xl"></i></a>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="frem">
+            <p class="words">Share your thoughts with the country</p>
+            <input class="text-area" placeholder="Write here" type="text" name="Opinions" id="my-input">
+            <script>
+                document.getElementById('my-input').value = '';
+            </script>
+            <div class="bottom-cont">
+                <button type="submit" name="save" value="confirm">
+                    <a href=""> <i class="fa-regular fa-paper-plane fa-2xl"></i></a>
+                </button>
+            </div>
         </div>
-    </div>
+    </form>
+</div>
+<div>
+    {% for one in PublicOpinion %}
+    {{one}} {{one.Opinion}} <br>
+    {% endfor %}
 </div>
 {% endblock %}

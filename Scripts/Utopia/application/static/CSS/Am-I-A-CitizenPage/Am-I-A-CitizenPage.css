@@ -8,6 +8,7 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 100px;
+    flex-direction: column;
     margin-top: 60px;
     overflow:none;
 }
@@ -46,6 +47,9 @@
     color: #484848;
     font-size: 21px;
     font-family:sans-serif;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 .text-area:empty::before {
     content: attr(data-placeholder);
@@ -60,6 +64,8 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     flex-direction: row;
     margin-top: 10px;
 }
@@ -73,8 +79,15 @@
     border-radius: 17px;
 }
 
-.bottom-cont a:nth-child(1) {
+.bottom-cont button{
+    border: none;
+    text-decoration: none;
     background: #15cf3736;
+    border-radius: 17px;
+}
+
+.bottom-cont a:nth-child(1) {
+
     margin: 20px;
     color: #15cf37;
 }
@@ -111,3 +124,4 @@ marquee{
     font-weight: 700;
     border: none;
 }
+

@@ -1,3 +1,4 @@
+import random
 from django.utils.html import strip_tags
 from django.urls import reverse
 from django.shortcuts import redirect
@@ -336,10 +337,17 @@ def EntertainmentPage(request):
 def Am_I_A_CitizenPage(request):
     if request.method == 'POST':
         news = request.POST.get('save')
-        return redirect(NewsDetailsPage, news)
+        if news == "confirm":
+            userOpinion = request.POST.get('Opinions')
+            opinion = PublicOpinions(random.randint(1, 10000000),request.user.username,userOpinion)
+            opinion.save()
+        else:
+            return redirect(NewsDetailsPage, news)
     news = News.objects.all()
+    opinions = PublicOpinions.objects.all()
     context = {
         'NEWS': news,
+        'PublicOpinion': opinions
     }
     return render(request, 'Am-I-A-CitizenPage.html', context)
 
@@ -347,7 +355,15 @@ def Am_I_A_CitizenPage(request):
 @login_required
 def NewsDetailsPage(request, NewsNumber):
     newsDetails = News.objects.get(NewsNumber=NewsNumber)
-    newsDetails.Details=strip_tags(newsDetails.Details)
+    newsDetails.Details = strip_tags(newsDetails.Details)
+    newsDetails.save()
+    UserId = request.user.username
+    one = json.loads(newsDetails.ViewDoneList)
+    if str(UserId) not in one:
+        one += str(UserId)
+        newsDetails.TotalView += 1
+        one = json.dumps(one, separators=(",", ","))
+        newsDetails.ViewDoneList = one
     newsDetails.save()
     newsDetails = {
         'newsDetails': newsDetails,

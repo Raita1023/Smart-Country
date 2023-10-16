@@ -89,7 +89,18 @@ class News(models.Model):
     Posting_Time=models.DateTimeField()
     Channel_Name=models.CharField(max_length=500)
     Reporter_Name=models.CharField(max_length=500)
+    ViewDoneList=models.JSONField()
+    TotalView=models.IntegerField()
     
     def __str__(self):
         return str(self.NewsTitle)
     
+    
+    
+class PublicOpinions(models.Model):
+    OpinionID=models.AutoField(primary_key=True, editable=False)
+    UserID=models.IntegerField()
+    Opinion=models.TextField()
+    
+    def __str__(self):
+        return str(self.OpinionID)

@@ -10,4 +10,4 @@ admin.site.register(MPElection)
 admin.site.register(MinisterPrimaryDetails)
 admin.site.register(CountryMinistries)
 admin.site.register(News)
-
+admin.site.register(PublicOpinions)
