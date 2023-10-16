@@ -83,8 +83,9 @@ class MinisterPrimaryDetails(models.Model):
     
     
 class News(models.Model):
-    NewsTitle=models.CharField(max_length=1000,primary_key=True)
+    NewsTitle=models.CharField(max_length=1000,unique=True)
     Details=HTMLField()
+    NewsNumber=models.IntegerField(primary_key=True)
     Posting_Time=models.DateTimeField()
     Channel_Name=models.CharField(max_length=500)
     Reporter_Name=models.CharField(max_length=500)

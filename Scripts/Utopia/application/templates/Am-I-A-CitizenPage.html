@@ -7,11 +7,13 @@
 {% block content %}
 <div class="news">
     <p>Tranding : </p>
-    <marquee behavior="" direction="" onmouseover="stop()" onmouseout="start()">
+    <marquee behavior="" direction="" onmouseover="stop()" onmouseout="start()"  scrollamount="15">
         <form action="" method="post">
             {% csrf_token %}
             {% for news in NEWS %}
-            <a href="" name="news" value={{news.NewsTitle}}>{{news.NewsTitle}}</a> &nbsp; || &nbsp;
+            <button type="submit" name="save" value="{{news.NewsNumber}}">
+                {{news.NewsTitle}} &nbsp; || &nbsp;
+            </button>
             {% endfor %}
         </form>
     </marquee>

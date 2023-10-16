@@ -97,10 +97,17 @@ marquee{
 .news p{
     margin: 10px auto;
     width: 200px;
-    color: white;
+    color: red;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 .news a{
     background-color: black;
     text-decoration: none;
+}
+
+.news button{
+    background-color:black;
+    color: white;
+    font-weight: 700;
+    border: none;
 }

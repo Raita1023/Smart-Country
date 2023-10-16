@@ -19,6 +19,7 @@ urlpatterns = [
     path('EducationPage/',views.EducationPage,name='EducationPage'),
     path('EntertainmentPage/',views.EntertainmentPage,name='EntertainmentPage'),
     path('Am_I_A_Citizen/',views.Am_I_A_CitizenPage,name='Am_I_A_CitizenPage'),
+    path('NewsDetailsPage/<NewsNumber>/',views.NewsDetailsPage,name='NewsDetailsPage'),
     path('AboutPage/',views.AboutPage,name='AboutPage'),
     path('ContactPage/',views.ContactPage,name='ContactPage'),
     path('HelpPage/',views.HelpPage,name='HelpPage'),

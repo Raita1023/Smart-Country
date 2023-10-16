@@ -1,3 +1,4 @@
+from django.utils.html import strip_tags
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
@@ -334,13 +335,24 @@ def EntertainmentPage(request):
 @login_required
 def Am_I_A_CitizenPage(request):
     if request.method == 'POST':
-        news=request.POST.get('news')
-        print(news,23)
+        news = request.POST.get('save')
+        return redirect(NewsDetailsPage, news)
     news = News.objects.all()
     context = {
         'NEWS': news,
     }
     return render(request, 'Am-I-A-CitizenPage.html', context)
+
+
+@login_required
+def NewsDetailsPage(request, NewsNumber):
+    newsDetails = News.objects.get(NewsNumber=NewsNumber)
+    newsDetails.Details=strip_tags(newsDetails.Details)
+    newsDetails.save()
+    newsDetails = {
+        'newsDetails': newsDetails,
+    }
+    return render(request, 'NewsDetailsPage.html', newsDetails)
 
 
 @login_required
