@@ -35,7 +35,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
+    'jet.dashboard',
+    'jet',
     'tinymce',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'application'
+    'application',
+    'feedparser',
 ]
 
 MIDDLEWARE = [
@@ -130,7 +132,6 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'application', 'media')
 MEDIA_URL = '/application/media/'
-
 
 
 # Default primary key field type
