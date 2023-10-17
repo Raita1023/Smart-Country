@@ -98,9 +98,8 @@ class News(models.Model):
     
     
 class PublicOpinions(models.Model):
-    OpinionID=models.AutoField(primary_key=True, editable=False)
     UserID=models.IntegerField()
-    Opinion=models.TextField()
+    Opinion=models.TextField(primary_key=True)
     
     def __str__(self):
-        return str(self.OpinionID)
+        return str(self.Opinion)

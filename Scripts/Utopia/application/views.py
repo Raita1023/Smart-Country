@@ -339,7 +339,7 @@ def Am_I_A_CitizenPage(request):
         news = request.POST.get('save')
         if news == "confirm":
             userOpinion = request.POST.get('Opinions')
-            opinion = PublicOpinions(random.randint(1, 10000000),request.user.username,userOpinion)
+            opinion = PublicOpinions(request.user.username,userOpinion)
             opinion.save()
         else:
             return redirect(NewsDetailsPage, news)
