@@ -125,3 +125,26 @@ marquee{
     border: none;
 }
 
+
+.show{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 17px;
+    margin: 20px;
+    background-color: burlywood;
+}
+
+.show p{
+    font-weight: 800;
+    font-size: 30px;
+    margin: 20px;
+    padding: 10px;
+    word-wrap: break-word;
+}
+.message{
+    text-align: center;
+    justify-content: center;
+    height: fit-content;
+    align-items: center;
+}
