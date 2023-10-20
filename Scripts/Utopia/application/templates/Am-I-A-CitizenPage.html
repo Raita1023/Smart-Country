@@ -13,7 +13,7 @@ Am I A Citizen
     <form action="" method="post">
       {% csrf_token %}
       {% for news in NEWS %}
-      <button type="submit" name="save" value="{{ news.NewsNumber }}">{{ news.NewsTitle }} &nbsp; || &nbsp;</button>
+      <button type="submit" name="save" value="{{ news.url }}">{{ news.title }} &nbsp; || &nbsp;</button>
       {% endfor %}
     </form>
   </marquee>

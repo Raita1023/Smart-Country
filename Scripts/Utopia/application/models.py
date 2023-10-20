@@ -82,21 +82,6 @@ class MinisterPrimaryDetails(models.Model):
     
     
     
-class News(models.Model):
-    NewsTitle=models.CharField(max_length=1000,unique=True)
-    Details=HTMLField()
-    NewsNumber=models.IntegerField(primary_key=True)
-    Posting_Time=models.DateTimeField()
-    Channel_Name=models.CharField(max_length=500)
-    Reporter_Name=models.CharField(max_length=500)
-    ViewDoneList=models.JSONField()
-    TotalView=models.IntegerField()
-    
-    def __str__(self):
-        return str(self.NewsTitle)
-    
-    
-    
 class PublicOpinions(models.Model):
     UserID=models.IntegerField()
     Opinion=models.TextField(primary_key=True)

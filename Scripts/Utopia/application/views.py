@@ -1,6 +1,11 @@
 import random
+import requests
+import newsapi
+from bs4 import BeautifulSoup
+from newsapi.newsapi_client import NewsApiClient
 from django.utils.html import strip_tags
 from django.urls import reverse
+from django.conf import Settings
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, HttpResponse, redirect
@@ -343,32 +348,46 @@ def Am_I_A_CitizenPage(request):
             opinion.save()
         else:
             return redirect(NewsDetailsPage, news)
-    news = News.objects.all()
     opinions = PublicOpinions.objects.all()
+    
+    api_key = '392d7f4dc8c84340adfd4248a825e0e5'
+    newsapi = NewsApiClient(api_key=api_key)
+
+    # Specify your query parameters
+    query_params = {
+        'language': 'en',  # Language code (e.g., 'en' for English)
+    }
+
+    # Fetch news articles using the `get_top_headlines` method
+    headlines = newsapi.get_top_headlines(**query_params)
+    headlines= headlines['articles'][:10]
     context = {
-        'NEWS': news,
+        'NEWS': headlines,
         'PublicOpinion': opinions
     }
     return render(request, 'Am-I-A-CitizenPage.html', context)
 
 
 @login_required
-def NewsDetailsPage(request, NewsNumber):
-    newsDetails = News.objects.get(NewsNumber=NewsNumber)
-    newsDetails.Details = strip_tags(newsDetails.Details)
-    newsDetails.save()
-    UserId = request.user.username
-    one = json.loads(newsDetails.ViewDoneList)
-    if str(UserId) not in one:
-        one += str(UserId)
-        newsDetails.TotalView += 1
-        one = json.dumps(one, separators=(",", ","))
-        newsDetails.ViewDoneList = one
-    newsDetails.save()
-    newsDetails = {
-        'newsDetails': newsDetails,
+def NewsDetailsPage(request, news):
+    response = requests.get(news)
+    html_content = response.content
+
+#   Remove any unnecessary elements from the HTML content.
+    soup = BeautifulSoup(html_content, "html.parser")
+    header = soup.find("header")
+    footer = soup.find("footer")
+    nav = soup.find("nav")
+    if header is not None:
+        header.extract()
+    if footer is not None:
+        footer.extract()
+    if nav is not None:
+        nav.extract()
+    context={
+        "news": soup.prettify()
     }
-    return render(request, 'NewsDetailsPage.html', newsDetails)
+    return render(request, 'NewsDetailsPage.html',context)
 
 
 @login_required
@@ -392,7 +411,4 @@ def TicketsPage(request):
 
 
 def Undefine(request, undefined_path):
-    # You can log the undefined_path if needed
-    # Log the undefined_path variable or handle it in your preferred way
-    # For now, we'll simply redirect to the homepage
     return redirect(HomePage)
