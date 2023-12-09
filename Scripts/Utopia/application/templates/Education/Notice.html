@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Important Notice</h1>
+
+  <table class="Notice">
+    <thead>
+      <tr>
+        <th>SL</th>
+        <th>Title</th>
+        <th>Publish Date</th>
+        <th>Download</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for notice in important_notices %}
+        <tr>
+          <td>{{ notice.sl }}</td>
+          <td>{{ notice.title }}</td>
+          <td>{{ notice.publishDate }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

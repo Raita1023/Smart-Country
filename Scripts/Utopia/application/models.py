@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_delete
 from tinymce.models import HTMLField
+from decimal import Decimal
 
 
 
@@ -88,3 +89,117 @@ class PublicOpinions(models.Model):
     
     def __str__(self):
         return str(self.Opinion)
+    
+class ImportantNotice(models.Model):
+    Serial = models.IntegerField(primary_key=True)
+    Title = models.CharField(max_length=255)
+    Publish_date = models.DateField()
+
+    def __str__(self):
+        return str(self.Title)
+
+class SeatAvailability(models.Model):
+    UniversityName = models.CharField(max_length=255)
+    DueTime = models.DateTimeField()
+    AvailableSeats = models.IntegerField()
+
+    def __str__(self):
+        return str(self.UniversityName)
+    
+class Student(models.Model):
+    student_id = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100)
+    password = models.CharField(max_length=128)
+
+    def __str__(self):
+        return str(self.name)
+class Collage(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.CharField(max_length=20)
+
+    def __str__(self):
+        return str(self.Name)
+    
+class Honours(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.CharField(max_length=20)
+
+    def __str__(self):
+        return str(self.Name)
+    
+class Masters(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.CharField(max_length=50)
+
+    def __str__(self):
+        return str(self.Name)
+class Appointment(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    facility = models.CharField(max_length=255)
+    date = models.DateField()
+
+class Bus(models.Model):
+    bus_name = models.CharField(max_length=30)
+    source = models.CharField(max_length=30)
+    dest = models.CharField(max_length=30)
+    nos = models.DecimalField(decimal_places=0, max_digits=2)
+    rem = models.DecimalField(decimal_places=0, max_digits=2)
+    price = models.DecimalField(decimal_places=2, max_digits=6)
+    date = models.DateField()
+    time = models.TimeField()
+
+    def __str__(self):
+        return self.bus_name
+
+
+class UserB(models.Model):
+    user_id = models.AutoField(primary_key=True)
+    email = models.EmailField()
+    name = models.CharField(max_length=30)
+    password = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.email
+
+
+class Book(models.Model):
+    BOOKED = 'B'
+    CANCELLED = 'C'
+
+    TICKET_STATUSES = ((BOOKED, 'Booked'),
+                       (CANCELLED, 'Cancelled'),)
+    email = models.EmailField()
+    name = models.CharField(max_length=100)
+    bus_name = models.CharField(max_length=30)
+    source = models.CharField(max_length=30)
+    dest = models.CharField(max_length=30)
+    nos = models.DecimalField(decimal_places=0, max_digits=2)
+    price = models.DecimalField(decimal_places=2, max_digits=10)
+    date = models.DateField()
+    time = models.TimeField()
+    status = models.CharField(choices=TICKET_STATUSES, default=BOOKED, max_length=2)
+
+    def __str__(self):
+        return self.email
+class CarBook(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    facility = models.CharField(max_length=255)
+    date = models.DateField()
+    
+class PlaneBook(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    facility = models.CharField(max_length=255)
+    date = models.DateField()
+    
+class TrainBook(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    facility = models.CharField(max_length=255)
+    date = models.DateField()

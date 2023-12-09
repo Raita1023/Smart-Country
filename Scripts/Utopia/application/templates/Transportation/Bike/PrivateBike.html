@@ -1,0 +1,17 @@
+{% extends "BasePage.html" %}
+{% load static %}
+{% block title %}TRANSPORTATION{% endblock %}
+{% block more-style %}
+<link rel="stylesheet" href="{% static 'CSS/Transportation/Bike.css/PublicBike.css' %}">
+{% endblock %}
+{% block content %} 
+<div class="body">
+    <div class="wrapper">
+        <a href="{% url 'BikeTickets' %}" class="box">Bajaj Pulsar NS160 </a>
+        <a href="{% url 'BikeTickets' %}" class="box">Yamaha FZ-S FI V3</a>
+        <a href="{% url 'BikeTickets' %}" class="box">Honda 160R</a>
+        <a href="{% url 'BikeTickets' %}" class="box">Suzuki Gixxer</a>
+        <a href="{% url 'BikeTickets' %}" class="box">Runner Turbo 125</a>
+    </div>
+</div>
+{% endblock %}

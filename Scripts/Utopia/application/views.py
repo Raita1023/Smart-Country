@@ -17,6 +17,19 @@ from django.contrib import messages
 from django.db.models import Q
 from .forms import *
 from application.models import *
+from .models import SeatAvailability
+from .forms import StudentLoginForm
+from .models import Student
+from .forms import AppointmentForm
+from .models import UserB, Bus, Book
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from .forms import UserLoginForm, UserRegisterForm
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseRedirect
+from .models import Collage , Honours ,Masters
+
+
 
 from itertools import chain
 import os
@@ -86,7 +99,7 @@ def RegistrationFormPage(request):
             ((today.month, today.day) < (birthday.month, birthday.day))
         if UserImageFilename:
             UserImageFilename.name = f'{UserID}.jpg'
-            with open(f'media/', 'wb') as f:
+            with open(f'media', 'wb') as f:
                 f.write(UserImageFilename.read())
         if name == 'confirm':
             user_details = UsersPrimaryDetails(UserID, UserEmail, UserFullName, UserGender, UserOccupation,
@@ -412,3 +425,328 @@ def TicketsPage(request):
 
 def Undefine(request, undefined_path):
     return redirect(HomePage)
+
+
+def Education(request):
+    Data=ImportantNotice.objects.all()
+    data={
+        'Data': Data
+    }
+    return render(request, 'EducationPage.html',data)
+
+def Masters(request):
+    mastersData = Masters.objects.all()
+    data = {
+        'mastersData': mastersData
+    }
+    return render(request, 'Masters.html', data)
+
+
+def Honours(request):
+    honoursData=Honours.objects.all()
+    data={
+        'honoursData': honoursData
+    }
+    return render(request, 'Honours.html',data)
+def Collage(request):
+    collageData=Collage.objects.all()
+    data={
+        'collageData': collageData
+    }
+    return render(request, 'Collage.html',data)
+
+def Form(request):
+    return render(request, 'Form.html')
+
+def seat_availability_view(request):
+    seat_availability = SeatAvailability.objects.all()
+    return render(request, 'EducationPage.html', {'seat_availability': seat_availability})
+
+def StudentLogin(request):
+    if request.method == 'POST':
+        form = StudentLoginForm(request.POST)
+        if form.is_valid():
+            student_id = form.cleaned_data['student_id']
+            password = form.cleaned_data['password']
+            user = authenticate(request, student_id=student_id, password=password)
+            if user is not None:
+                login(request, user)
+                # Redirect to the student dashboard after successful login
+                return redirect('student_dashboard')
+            else:
+                # Handle invalid login credentials, e.g., display an error message
+                return render(request, 'Education/StudentLogin.html', {'form': form, 'error_message': 'Invalid login credentials'})
+    else:
+        form = StudentLoginForm()
+    return render(request, 'StudentLogin.html', {'form': form})
+
+@login_required(login_url='StudentLogin')
+def student_dashboard(request):
+    # Logic for the student dashboard view
+    return render(request, 'StudentLogin.html')
+
+
+def TransportationMain(request):
+    return render(request,"Transportation/TransportationMain.html")
+def Bikecategory(request):
+     return render(request,"Transportation/TransportationCategory.html/BikeCategory.html")
+def Carcategory(request):
+     return render(request,"Transportation/TransportationCategory.html/CarCategory.html")
+def Buscategory(request):
+     return render(request,"Transportation/TransportationCategory.html/BusCategory.html")
+def Traincategory(request):
+     return render(request,"Transportation/TransportationCategory.html/TrainCategory.html")
+def Planecategory(request):
+     return render(request,"Transportation/TransportationCategory.html/PlaneCategory.html")
+def  PublicBike(request):
+     return render(request,"Transportation/Bike/PublicBike.html")
+def  PrivateBike(request):
+     return render(request,"Transportation/Bike/PrivateBike.html")
+def  PublicCar(request):
+     return render(request,"Transportation/Car/PublicCar.html")
+def  PrivateCar(request):
+     return render(request,"Transportation/Car/PrivateCar.html")
+def  BusT(request):
+     return render(request,"Transportation/Bus/findbus.html")
+def  PublicTrain(request):
+     return render(request,"Transportation/Train/PublicTrain.html")
+def  PrivateTrain(request):
+     return render(request,"Transportation/Train/PrivateTrain.html")
+def  PublicPlane(request):
+     return render(request,"Transportation/Plane/PublicPlane.html")
+def  PrivatePlane(request):
+     return render(request,"Transportation/Plane/PrivatePlane.html")
+def  TicketsPage(request):
+     return render(request,"templates/TicketsPage.html")
+def  HealthcareMain(request):
+     return render(request,"Healthcare/HealthcareMain.html")
+def Clinic(request):
+     return render(request,"Healthcare/Category.html/Clinic.html")
+def Hospital(request):
+     return render(request,"Healthcare/Category.html/Hospital.html")
+def Pharmacy(request):
+     return render(request,"Healthcare/Category.html/Pharmacy.html")
+def Diagnostic(request):
+     return render(request,"Healthcare/Category.html/Diagnostic.html")
+def Eyeclinic(request):
+     return render(request,"Healthcare/Category.html/Eyeclinic.html")
+def  PublicClinic(request):
+     return render(request,"Healthcare/Clinic.html/PublicClinic.html")
+def  PrivateClinic(request):
+     return render(request,"Healthcare/Clinic.html/PrivateClinic.html")
+def  PublicHospital(request):
+     return render(request,"Healthcare/Hospital.html/PublicHospital.html")
+def  PrivateHospital(request):
+     return render(request,"Healthcare/Hospital.html/PrivateHospital.html")
+def  PrivateDiagnostic(request):
+     return render(request,"Healthcare/Diagnostic.html/PrivateDiagnostic.html")
+def  PublicDiagnostic(request):
+     return render(request,"Healthcare/Diagnostic.html/PublicDiagnostic.html")
+def  PrivateEyeclinic(request):
+     return render(request,"Healthcare/Eyeclinic.html/PrivateEyeclinic.html")
+def  PublicEyeclinic(request):
+     return render(request,"Healthcare/Eyeclinic.html/PublicEyeclinic.html")
+def  HospitalAppointmentPage(request):
+     return render(request,"Healthcare/Hospital.html/HospitalAppointmentPage.html")
+def  PharmacyBookingPage(request):
+     return render(request,"Healthcare/Pharmacy.html/PharmacyBookingPage.html")
+def  DiagnosticAppointmentPage(request):
+     return render(request,"Healthcare/Diagnostic.html/DiagnosticAppointmentPage.html")
+def  ClinicAppointmentPage(request):
+     return render(request,"Healthcare/Clinic.html/ClinicAppointmentPage.html")
+def  EyeclinicAppointmentPage(request):
+     return render(request,"Healthcare/Eyeclinic.html/EyeclinicAppointmentPage.html") 
+def book_clinicappointment(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('ThankYou')  
+
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'ClinicAppointmentPage.html', {'form': form})
+def book_diagappointment(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('ThankYou')  
+
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'DiagnosticAppointmentPage.html', {'form': form})
+def book_hospitalappointment(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('ThankYou')  
+
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'HospitalAppointmentPage.html', {'form': form})
+def book_pharmacyappointment(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('ThankYou')  
+
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'PharmacyAppointmentPage.html', {'form': form})
+def book_eyeappointment(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('ThankYou')  
+
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'EyeclinicAppointmentPage.html', {'form': form})
+def ThankYou(request):
+    return render(request, 'ThankYou.html')
+def CarTickets(request):
+    return render(request, 'CarTickets.html')
+def BikeTickets(request):
+    return render(request, 'BikeTickets.html')
+def TrainTickets(request):
+    return render(request, 'TrainTickets.html')
+def PlaneTickets(request):
+    return render(request, 'PlaneTickets.html')
+
+def book_CAR(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('ThankYou')  
+
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'CarTickets.html', {'form': form})
+def book_PLANE(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('ThankYou')  
+
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'PlaneTickets.html', {'form': form})
+def book_TRAIN(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('ThankYou')  
+
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'TrainTickets.html', {'form': form})
+
+def homebus(request):
+    if request.user.is_authenticated:
+        return render(request, 'Transportation/Bus/homebus.html')
+    else:
+        return render(request, 'Transportation/Bus/signin.html')
+
+
+def findbus(request):
+    context = {}
+    if request.method == 'POST':
+        source_r = request.POST.get('source')
+        dest_r = request.POST.get('destination')
+        date_r = request.POST.get('date')
+        bus_list = Bus.objects.filter(source=source_r, dest=dest_r, date=date_r)
+        if bus_list:
+            return render(request, 'Transportation/Bus/list.html', locals())
+        else:
+            context["error"] = "Sorry no buses availiable"
+            return render(request, 'Transportation/Bus/findbus.html', context)
+    else:
+        return render(request, 'Transportation/Bus/findbus.html')
+
+
+
+def bookings(request):
+    context = {}
+    if request.method == 'POST':
+        id_r = request.POST.get('bus_id')
+        seats_r = int(request.POST.get('no_seats'))
+        bus = Bus.objects.get(id=id_r)  # Corrected the field name to 'id'
+        if bus:
+            if bus.rem > int(seats_r):
+                name_r = bus.bus_name
+                cost = int(seats_r) * bus.price
+                source_r = bus.source
+                dest_r = bus.dest
+                nos_r = Decimal(bus.nos)
+                price_r = bus.price
+                date_r = bus.date
+                time_r = bus.time
+                username_r = request.user.username
+                email_r = request.user.email
+                userid_r = request.user.id
+                rem_r = bus.rem - seats_r
+                Bus.objects.filter(id=id_r).update(rem=rem_r)
+                book = Book.objects.create(name=username_r, email=email_r, bus_name=name_r,source=source_r, dest=dest_r, price=price_r, nos=seats_r, date=date_r, time=time_r,
+                                           status='BOOKED')
+                print('------------book id-----------', book.id)
+                # book.save()
+                return render(request, 'Transportation/Bus/bookings.html', locals())
+            else:
+                context["error"] = "Sorry, select fewer number of seats"
+                return render(request, 'Transportation/Bus/findbus.html', context)
+
+    else:
+        return render(request, 'Transportation/Bus/findbus.html')
+
+def cancellings(request):
+    context = {}
+    if request.method == 'POST':
+        id_r = request.POST.get('bus_id')
+        #seats_r = int(request.POST.get('no_seats'))
+
+        try:
+            book = Book.objects.get(id=id_r)
+            bus = Bus.objects.get(id=book.busid)
+            rem_r = bus.rem + book.nos
+            Bus.objects.filter(id=book.busid).update(rem=rem_r)
+            #nos_r = book.nos - seats_r
+            Book.objects.filter(id=id_r).update(status='CANCELLED')
+            Book.objects.filter(id=id_r).update(nos=0)
+            return redirect(seebookings)
+        except Book.DoesNotExist:
+            context["error"] = "Sorry You have not booked that bus"
+            return render(request, 'Transportation/Bus/error.html', context)
+    else:
+        return render(request, 'Transportation/Bus/findbus.html')
+
+
+
+def seebookings(request,new={}):
+    context = {}
+    id_r = request.user.id
+    book_list = Book.objects.filter(id=id_r)
+    if book_list:
+        return render(request, 'Transportation/Bus/booklist.html', locals())
+    else:
+        context["error"] = "Sorry no buses booked"
+        return render(request, 'Transportation/Bus/findbus.html', context)
+
+
+
+
+

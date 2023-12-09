@@ -1,0 +1,19 @@
+{% extends "BasePage.html" %}
+{% load static %}
+{% block title %}TRANSPORTATION{% endblock %}
+{% block more-style %}
+<link rel="stylesheet" href="{% static 'CSS/Transportation/Bike.css/PublicBike.css' %}">
+<link rel="stylesheet" href="https://fonts.google.com/specimen/Martian+Mono/tester?preview.text=public&preview.text_type=custom" crossorigin="anonymous"> 
+{% endblock %}
+{% block content %} 
+<div class="body">
+    <div class="wrapper">
+        <a href="{% url 'TrainTickets' %}" class="box">Banglabandha Express</a>
+        <a href="{% url 'TrainTickets' %}" class="box">Rocket Express</a>
+        <a href="{% url 'TrainTickets' %}" class="box">Shonar Bangla Express</a>
+        <a href="{% url 'TrainTickets' %}" class="box">Uttara Express</a>
+        <a href="{% url 'TrainTickets' %}" class="box">Bhawal Express</a>
+        <a href="{% url 'TrainTickets' %}" class="box">Jamuna Express</a>
+    </div>
+</div>
+{% endblock %}

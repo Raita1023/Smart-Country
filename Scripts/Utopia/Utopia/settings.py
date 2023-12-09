@@ -35,8 +35,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'jet.dashboard',
-    'jet',
     'tinymce',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -162,3 +160,4 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 LOGIN_URL='/EntryPage/'
+APPEND_SLASH = False

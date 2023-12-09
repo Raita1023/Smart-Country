@@ -1,8 +1,48 @@
 {% extends "BasePage.html" %}
 {% load static %}
-{% block title %}Education{% endblock %}
+{% block title %}EDUCATION{% endblock %}
 {% block more-style %}
+<link rel="stylesheet" href="{% static 'CSS/Education/EducationHome.css' %}">
+<link rel="stylesheet" href="{% static '/JAVASCRIPT/Education.js/EducationHome.js' %}">
 {% endblock %}
 {% block content %}
-<p>This Page For Education</p>
+<div class="main">
+        <div class="contents">
+          <li><a href="{% url 'Collage' %}" class="Collage">Collage</a></li>
+          <li><a href="{% url 'Honours' %}" class="Honours">Honours</a></li>
+          <li><a href="{% url 'Masters' %}" class="Masters">Masters</a></li>
+        </div>
+      
+        <div class="button">
+          <a href="{% url 'Form' %}" class="Form">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Apply Now
+          </a>
+        </div>
+        
+        <div class="Notice">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Serial</th>
+                      <th>Title</th>
+                      <th>Date</th>
+                  </tr>
+              </thead>
+              <tbody>
+                {% for n in Data %}
+                      <tr>
+                          <td>"{{n.Serial}}"</td>
+                          <td>"{{n.Title}}"</td>
+                          <td>"{{n.Publish_date}}"</td>
+                      </tr>
+                {% endfor %}    
+              </tbody>
+          </table>
+      </div>
+</div>
 {% endblock %}
+  
